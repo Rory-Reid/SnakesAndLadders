@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SnakesAndLadders
+﻿namespace SnakesAndLadders
 {
-    class Token
+    public class Token
     {
+        public int CurrentSquare { get; }
+
+        public void PlaceOnBoard(Board board)
+        {
+        }
+
+        public void MoveSpaces()
+        {
+        }
     }
 }
