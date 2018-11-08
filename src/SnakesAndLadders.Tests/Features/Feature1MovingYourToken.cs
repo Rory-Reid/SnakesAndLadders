@@ -7,6 +7,7 @@ namespace SnakesAndLadders.Tests.Features
     public class Feature1MovingYourToken
     {
         Game game;
+        Dice dice = new Dice();
 
         [TestMethod]
         public void TokenCanMoveAcrossTheBoard()
@@ -21,6 +22,20 @@ namespace SnakesAndLadders.Tests.Features
             TheTokenIsOnSquare(1);
         }
 
+        [TestMethod]
+        public void MovesAreDeterminedByDiceRolls()
+        {
+            // Given
+            TheGameIsStarted();
+
+            // When
+            ThePlayerRollsADie();
+
+            // Then
+            TheResultShouldBeBetween1To6Inclusive();
+        }
+
+
         private void TheGameIsStarted()
         {
             game = new Game();
@@ -32,9 +47,19 @@ namespace SnakesAndLadders.Tests.Features
             game.ActiveToken.PlaceOnBoard(game.Board);
         }
 
+        private void ThePlayerRollsADie()
+        {
+            dice.Roll();
+        }
+
         private void TheTokenIsOnSquare(int squareNumber)
         {
             Assert.AreEqual(squareNumber, game.ActiveToken.CurrentSquare);
+        }
+
+        private void TheResultShouldBeBetween1To6Inclusive()
+        {
+            Assert.IsTrue(dice.Result >= 1 && dice.Result <= 6);
         }
     }
 }
