@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SnakesAndLadders
 {
-    public class Class1
+    class Token
     {
     }
 }
