@@ -10,7 +10,7 @@ namespace SnakesAndLadders.Tests.Features
         Dice dice = new Dice();
 
         [TestMethod]
-        public void TokenCanMoveAcrossTheBoard()
+        public void TokenCanMoveAcrossTheBoard1()
         {
             // Given
             TheGameIsStarted();
@@ -20,6 +20,33 @@ namespace SnakesAndLadders.Tests.Features
 
             // Then
             TheTokenIsOnSquare(1);
+        }
+
+        [TestMethod]
+        public void TokenCanMoveAcrossTheBoard2()
+        {
+            // Given
+            TheTokenIsCurrentlyOnSquare(1);
+
+            // When
+            TheTokenIsMovedForward(3);
+
+            // Then
+            TheTokenIsOnSquare(4);
+        }
+
+        [TestMethod]
+        public void TokenCanMoveAcrossTheBoard3()
+        {
+            // Given
+            TheTokenIsCurrentlyOnSquare(1);
+
+            // When
+            TheTokenIsMovedForward(3);
+            TheTokenIsMovedForward(4);
+
+            // Then
+            TheTokenIsOnSquare(8);
         }
 
         [TestMethod]
@@ -42,9 +69,19 @@ namespace SnakesAndLadders.Tests.Features
             game.Start();
         }
 
+        private void TheTokenIsCurrentlyOnSquare(int square)
+        {
+            game.ActiveToken.CurrentSquare = square;
+        }
+
         private void TheTokenIsPlacedOnTheBoard()
         {
             game.ActiveToken.PlaceOnBoard(game.Board);
+        }
+
+        private void TheTokenIsMovedForward(int spacesToMove)
+        {
+            game.ActiveToken.MoveSpaces(spacesToMove);
         }
 
         private void ThePlayerRollsADie()

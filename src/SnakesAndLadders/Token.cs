@@ -2,13 +2,13 @@
 {
     public class Token
     {
-        public int CurrentSquare { get; }
+        public int CurrentSquare { get; set; }
 
         public void PlaceOnBoard(Board board)
         {
         }
 
-        public void MoveSpaces()
+        public void MoveSpaces(int amountToMove)
         {
         }
     }
