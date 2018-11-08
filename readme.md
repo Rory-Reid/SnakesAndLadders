@@ -23,6 +23,7 @@ Key decisions made for this challenge are as follows:
 
 - UI Not necessary. Create a class library for now and worry about running it later. Potentially add a console app to drive it before the hour's done, but focus on running code via tests first.
 - Debated using Specflow to specify and run high level tests (since it allows you to use a given/when/then syntax). In an effort to keep the solution simple at this point I'll just build the feature tests without a tool.
+- The feature tests will test all components integrated together. Individual tests will be added for classes to test their functions in isolation.
 
 ## Future evolution
 

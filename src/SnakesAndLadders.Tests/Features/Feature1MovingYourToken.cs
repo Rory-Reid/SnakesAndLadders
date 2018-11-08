@@ -65,7 +65,7 @@ namespace SnakesAndLadders.Tests.Features
 
         private void TheGameIsStarted()
         {
-            game = new Game();
+            game = new Game(new Board(), new Token());
             game.Start();
         }
 
