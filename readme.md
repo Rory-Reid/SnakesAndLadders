@@ -3,6 +3,7 @@
 ## Log
 
 Solution started at 7:40
+Stopped code at 9:12
 
 ## How to run
 
