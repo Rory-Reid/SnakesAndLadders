@@ -52,6 +52,9 @@
     <Compile Include="Features\Feature1MovingYourToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameTests.cs" />
+    <Compile Include="TokenTests.cs" />
+    <Compile Include="BoardTests.cs" />
+    <Compile Include="DiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

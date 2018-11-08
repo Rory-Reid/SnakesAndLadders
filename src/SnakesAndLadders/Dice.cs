@@ -1,16 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SnakesAndLadders
 {
     public class Dice
     {
-        public int Result { get; }
+        private Random randomNumberGenerator;
+
+        public Dice(Random randomNumberGenerator)
+        {
+            this.randomNumberGenerator = randomNumberGenerator;
+        }
+
+        public virtual int Result { get; private set; }
+
         public void Roll()
         {
+            Result = randomNumberGenerator.Next(1, 6);
         }
     }
 }

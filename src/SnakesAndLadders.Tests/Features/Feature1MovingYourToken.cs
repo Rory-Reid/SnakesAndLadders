@@ -7,7 +7,17 @@ namespace SnakesAndLadders.Tests.Features
     public class Feature1MovingYourToken
     {
         Game game;
-        Dice dice = new Dice();
+        RandomFake random;
+        Dice dice;
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            random = new RandomFake();
+            dice = new Dice(random);
+
+            game = new Game(new Board(), new Token(), dice);
+        }
 
         [TestMethod]
         public void TokenCanMoveAcrossTheBoard1()
@@ -26,6 +36,7 @@ namespace SnakesAndLadders.Tests.Features
         public void TokenCanMoveAcrossTheBoard2()
         {
             // Given
+            SetupActiveGame();
             TheTokenIsCurrentlyOnSquare(1);
 
             // When
@@ -39,6 +50,7 @@ namespace SnakesAndLadders.Tests.Features
         public void TokenCanMoveAcrossTheBoard3()
         {
             // Given
+            SetupActiveGame();
             TheTokenIsCurrentlyOnSquare(1);
 
             // When
@@ -50,7 +62,7 @@ namespace SnakesAndLadders.Tests.Features
         }
 
         [TestMethod]
-        public void MovesAreDeterminedByDiceRolls()
+        public void MovesAreDeterminedByDiceRolls1()
         {
             // Given
             TheGameIsStarted();
@@ -62,10 +74,29 @@ namespace SnakesAndLadders.Tests.Features
             TheResultShouldBeBetween1To6Inclusive();
         }
 
+        [TestMethod]
+        public void MovesAreDeterminedByDiceRolls2()
+        {
+            // Given
+            SetupActiveGame();
+            ThePlayerRollsA(4);
 
+            // When
+            ThePlayerMovesTheirToken();
+
+            // Then
+            TheTokenShouldMoveSpaces(4);
+        }
+
+        private void SetupActiveGame()
+        {
+            TheGameIsStarted();
+            TheTokenIsPlacedOnTheBoard();
+        }
+
+        // Given
         private void TheGameIsStarted()
         {
-            game = new Game(new Board(), new Token());
             game.Start();
         }
 
@@ -74,6 +105,14 @@ namespace SnakesAndLadders.Tests.Features
             game.ActiveToken.CurrentSquare = square;
         }
 
+        private void ThePlayerRollsA(int value)
+        {
+            // Force the dice's random number generator to explicity return a specific value on next roll.
+            random.SetNextValue(value);
+            dice.Roll();
+        }
+
+        // When
         private void TheTokenIsPlacedOnTheBoard()
         {
             game.ActiveToken.PlaceOnBoard(game.Board);
@@ -89,6 +128,12 @@ namespace SnakesAndLadders.Tests.Features
             dice.Roll();
         }
 
+        private void ThePlayerMovesTheirToken()
+        {
+            game.MoveActiveToken();
+        }
+
+        // Then
         private void TheTokenIsOnSquare(int squareNumber)
         {
             Assert.AreEqual(squareNumber, game.ActiveToken.CurrentSquare);
@@ -97,6 +142,37 @@ namespace SnakesAndLadders.Tests.Features
         private void TheResultShouldBeBetween1To6Inclusive()
         {
             Assert.IsTrue(dice.Result >= 1 && dice.Result <= 6);
+        }
+
+        private void TheTokenShouldMoveSpaces(int amountOfSpacesTheTokenShouldHaveMoved)
+        {
+            // Weakness for now - this only validates spaces moved from the start. Not massively reusable
+            var expectedSpace = game.Board.StartSquare + amountOfSpacesTheTokenShouldHaveMoved;
+            Assert.AreEqual(expectedSpace, game.ActiveToken.CurrentSquare);
+        }
+
+        private class RandomFake : Random
+        {
+            bool fakeNextValue = false;
+            int nextValue = 0;
+
+            public void SetNextValue(int value)
+            {
+                fakeNextValue = true;
+                nextValue = value;
+            }
+
+            public override int Next(int minValue, int maxValue)
+            {
+                if (fakeNextValue)
+                {
+                    return nextValue;
+                }
+                else
+                {
+                    return base.Next(minValue, maxValue);
+                }
+            }
         }
     }
 }

@@ -3,10 +3,12 @@
     public class Game
     {
         Token player;
+        Dice dice;
 
-        public Game(Board gameBoard, Token player)
+        public Game(Board gameBoard, Token player, Dice dice)
         {
             this.player = player;
+            this.dice = dice;
             Board = gameBoard;
         }
 
@@ -16,6 +18,11 @@
         public void Start()
         {
             ActiveToken = player;
+        }
+
+        public void MoveActiveToken()
+        {
+            ActiveToken.MoveSpaces(dice.Result);
         }
     }
 }
